@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "style-resources-loader": "^1.3.3",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
@@ -26,6 +27,11 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "style-resources-loader": "^1.3.2",
+    "svg-sprite-loader": "^4.1.6",
+    "vue-cli-plugin-style-resources-loader": "^0.1.4",
+    "vue-cli-plugin-svg-sprite-loader": "^1.0.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-svg-spritely": "^1.3.8"
   }
 }
