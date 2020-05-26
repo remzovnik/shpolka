@@ -7,46 +7,26 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    scrollBehavior: () => ({
-      x: 0,
-      y: 0,
-    }),
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
   },
   {
     path: '/books',
     name: 'books',
-    scrollBehavior: () => ({
-      x: 0,
-      y: 0,
-    }),
     component: () => import(/* webpackChunkName: "books" */ '../views/Books.vue'),
   },
   {
     path: '/authors',
     name: 'authors',
-    scrollBehavior: () => ({
-      x: 0,
-      y: 0,
-    }),
     component: () => import(/* webpackChunkName: "books" */ '../views/Authors.vue'),
   },
   {
     path: '/author/:authorId',
     name: 'author',
-    scrollBehavior: () => ({
-      x: 0,
-      y: 0,
-    }),
     component: () => import(/* webpackChunkName: "author" */ '../views/Author.vue'),
   },
   {
     path: '/book/:bookId',
     name: 'book',
-    scrollBehavior: () => ({
-      x: 0,
-      y: 0,
-    }),
     component: () => import(/* webpackChunkName: "book" */ '../views/Book.vue'),
   },
 ];
@@ -55,6 +35,9 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
 });
 
 export default router;
