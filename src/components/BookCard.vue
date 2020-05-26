@@ -16,8 +16,6 @@
 </template>
 
 <script>
-// import books from '../data/books.json';
-
 export default {
   name: 'CBookCard',
 
@@ -63,18 +61,6 @@ export default {
       default: '',
     },
   },
-
-  // methods: {
-  //   getAuthorName() {
-  //     return books.find((item) => item.authorId === this.authorId).name;
-  //   },
-  // },
-
-  // data() {
-  //   return {
-  //     authorName: this.getAuthorName(),
-  //   };
-  // },
 };
 </script>
 
