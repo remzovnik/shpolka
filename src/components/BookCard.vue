@@ -6,22 +6,24 @@
     <div class="c-book-card__desc">
       <router-link
         class="c-book-card__link"
-        :to="{name: 'book', params: {bookId, title: title, text: text}}"
+        :to="{name: 'book', params: {bookId: bookId}}"
       >
         <h2 class="c-book-card__title">{{title}}</h2>
       </router-link>
-      <div class="c-book-card__info">{{author}}, {{year}}</div>
+      <div class="c-book-card__info">{{authorName}}, {{year}}</div>
     </div>
   </article>
 </template>
 
 <script>
+// import books from '../data/books.json';
+
 export default {
   name: 'CBookCard',
 
   props: {
     bookId: {
-      type: Number,
+      type: String,
       required: true,
     },
 
@@ -31,14 +33,20 @@ export default {
       default: '',
     },
 
-    author: {
+    authorId: {
+      type: String,
+      required: true,
+      default: '',
+    },
+
+    authorName: {
       type: String,
       required: true,
       default: '',
     },
 
     year: {
-      type: [String, Number],
+      type: String,
       required: true,
       default: '',
     },
@@ -54,13 +62,19 @@ export default {
       required: true,
       default: '',
     },
-
-    text: {
-      type: String,
-      required: true,
-      default: '',
-    },
   },
+
+  // methods: {
+  //   getAuthorName() {
+  //     return books.find((item) => item.authorId === this.authorId).name;
+  //   },
+  // },
+
+  // data() {
+  //   return {
+  //     authorName: this.getAuthorName(),
+  //   };
+  // },
 };
 </script>
 

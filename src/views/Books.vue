@@ -1,7 +1,7 @@
 <template>
   <main class="v-books">
     <div class="container">
-      <h1 class="v-books__title page-title">{{title}}</h1>
+      <h1 class="page-title">{{title}}</h1>
       <div class="v-books__desc">{{desc}}</div>
 
       <div class="v-books__sort">
@@ -35,7 +35,7 @@
               'v-books__sort-btn_state_desc': sortTypeState.byAuthor === 'desc'
             }"
             type="button"
-            @click="sortBy('author')"
+            @click="sortBy('authorName')"
           >
             По автору
             <SvgIcon class="v-books__sort-btn-icon" name="sort"/>
@@ -74,6 +74,7 @@
 import CBookCard from '@/components/BookCard.vue';
 import SvgIcon from '../components/SvgIcon.vue';
 
+import booksPage from '../data/booksPage.json';
 import books from '../data/books.json';
 
 export default {
@@ -96,7 +97,7 @@ export default {
           break;
         }
 
-        case 'author': {
+        case 'authorName': {
           this.switchSortType('byAuthor');
           break;
         }
@@ -151,9 +152,9 @@ export default {
 
   data() {
     return {
-      title: books.title,
-      desc: books.desc,
-      list: books.list,
+      title: booksPage.title,
+      desc: booksPage.desc,
+      list: books,
       isSortActive: false,
       sortTypeActive: null,
       sortTypeState: {
@@ -168,12 +169,7 @@ export default {
 
 <style lang="scss">
 .v-books {
-  padding-top: 80px;
-
-  &__title {
-    margin-bottom: 16px;
-    text-align: center;
-  }
+  padding: 80px 0;
 
   &__desc {
     margin-bottom: 24px;

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -8,22 +7,46 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "books" */ '../views/Home.vue'),
+    scrollBehavior: () => ({
+      x: 0,
+      y: 0,
+    }),
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
   },
   {
     path: '/books',
     name: 'books',
+    scrollBehavior: () => ({
+      x: 0,
+      y: 0,
+    }),
     component: () => import(/* webpackChunkName: "books" */ '../views/Books.vue'),
   },
   {
     path: '/authors',
     name: 'authors',
-    component: () => import(/* webpackChunkName: "authors" */ '../views/Authors.vue'),
+    scrollBehavior: () => ({
+      x: 0,
+      y: 0,
+    }),
+    component: () => import(/* webpackChunkName: "books" */ '../views/Authors.vue'),
+  },
+  {
+    path: '/author/:authorId',
+    name: 'author',
+    scrollBehavior: () => ({
+      x: 0,
+      y: 0,
+    }),
+    component: () => import(/* webpackChunkName: "author" */ '../views/Author.vue'),
   },
   {
     path: '/book/:bookId',
     name: 'book',
-    props: true,
+    scrollBehavior: () => ({
+      x: 0,
+      y: 0,
+    }),
     component: () => import(/* webpackChunkName: "book" */ '../views/Book.vue'),
   },
 ];

@@ -4,6 +4,11 @@ body {
     font: $font-family-default, sans 16px/1.6;
 }
 
+a {
+    color: $color-decor;
+    text-decoration: none;
+}
+
 .container {
     margin: 0 auto;
     max-width: 850px;
@@ -11,6 +16,8 @@ body {
 }
 
 .page-title {
+    margin-bottom: 16px;
+    text-align: center;
     font-size: 32px;
     line-height: 1.6;
     color: $color-primary;
