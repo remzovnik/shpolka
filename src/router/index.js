@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/authors',
     name: 'authors',
-    component: () => import(/* webpackChunkName: "books" */ '../views/Authors.vue'),
+    component: () => import(/* webpackChunkName: "authors" */ '../views/Authors.vue'),
   },
   {
     path: '/author/:authorId',

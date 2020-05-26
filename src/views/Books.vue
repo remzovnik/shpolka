@@ -236,7 +236,7 @@ export default {
     align-items: center;
     padding: 8px;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 300;
     letter-spacing: 0.2em;
 

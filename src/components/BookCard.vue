@@ -10,7 +10,15 @@
       >
         <h2 class="c-book-card__title">{{title}}</h2>
       </router-link>
-      <div class="c-book-card__info">{{authorName}}, {{year}}</div>
+      <div class="c-book-card__info">
+        <router-link
+          class="c-book-card__link"
+          :to="{name: 'author', params: {authorId: authorId}}"
+        >
+          {{authorName}}
+        </router-link>
+        , {{year}}
+      </div>
     </div>
   </article>
 </template>
@@ -60,6 +68,10 @@ export default {
       required: true,
       default: '',
     },
+  },
+
+  mounted() {
+    console.log(this.authorId);
   },
 };
 </script>

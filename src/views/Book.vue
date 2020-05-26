@@ -24,18 +24,12 @@ export default {
   name: 'VBook',
 
   mounted() {
-    this.getBookData();
-  },
+    const bookData = books.find((book) => ((book.bookId === this.$route.params.bookId) ? book : false));
 
-  methods: {
-    getBookData() {
-      const bookData = books.find((book) => ((book.bookId === this.$route.params.bookId) ? book : false));
-
-      this.title = bookData.title;
-      this.authorId = bookData.authorId;
-      this.authorName = bookData.authorName;
-      this.text = bookData.text;
-    },
+    this.title = bookData.title;
+    this.authorId = bookData.authorId;
+    this.authorName = bookData.authorName;
+    this.text = bookData.text;
   },
 
   data() {
