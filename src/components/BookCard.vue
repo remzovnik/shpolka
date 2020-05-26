@@ -69,10 +69,6 @@ export default {
       default: '',
     },
   },
-
-  mounted() {
-    console.log(this.authorId);
-  },
 };
 </script>
 
