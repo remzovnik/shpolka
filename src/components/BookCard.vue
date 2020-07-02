@@ -1,23 +1,28 @@
 <template>
   <article class="c-book-card">
     <div class="c-book-card__img-container">
-      <img class="c-book-card__img" :src="imagePath" :alt="imageAlt || ' '">
+      <img
+        class="c-book-card__img"
+        :src="`http://localhost:1337${image.url}`"
+        :alt="imageAlt || ' '"
+      >
     </div>
     <div class="c-book-card__desc">
       <router-link
         class="c-book-card__link"
-        :to="{name: 'book', params: {bookId: bookId}}"
+        :to="{name: 'book', params: {bookId: id}}"
       >
-        <h2 class="c-book-card__title">{{title}}</h2>
+        <h2 class="c-book-card__title" v-if="title">{{title}}</h2>
       </router-link>
       <div class="c-book-card__info">
         <router-link
+          v-if="author.id && author.name"
           class="c-book-card__link"
-          :to="{name: 'author', params: {authorId: authorId}}"
+          :to="{name: 'author', params: {authorId: author.id}}"
         >
-          {{authorName}}
+          {{author.name}},
         </router-link>
-        , {{year}}
+        {{year}}
       </div>
     </div>
   </article>
@@ -28,8 +33,8 @@ export default {
   name: 'CBookCard',
 
   props: {
-    bookId: {
-      type: String,
+    id: {
+      type: Number,
       required: true,
     },
 
@@ -39,36 +44,29 @@ export default {
       default: '',
     },
 
-    authorId: {
-      type: String,
-      required: true,
-      default: '',
-    },
-
-    authorName: {
-      type: String,
-      required: true,
-      default: '',
+    author: {
+      type: [Object, Number],
+      required: false,
     },
 
     year: {
-      type: String,
+      type: Number,
       required: true,
-      default: '',
     },
 
-    imagePath: {
-      type: String,
+    image: {
+      type: Object,
       required: true,
-      default: '',
     },
 
     imageAlt: {
       type: String,
       required: true,
-      default: '',
+      default: ' ',
     },
   },
+
+  inheritAttrs: false,
 };
 </script>
 

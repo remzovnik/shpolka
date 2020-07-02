@@ -1,17 +1,17 @@
 <template>
   <main class="v-authors">
     <div class="container">
-      <h1 class="page-title">{{title}}</h1>
-      <div class="v-authors__desc">{{desc}}</div>
+      <h1 class="page-title" v-if="AUTHORS_PAGE.title">{{AUTHORS_PAGE.title}}</h1>
+      <div class="v-authors__desc" v-if="AUTHORS_PAGE.desc">{{AUTHORS_PAGE.desc}}</div>
 
       <ul class="v-books__list">
         <li
-          v-for="(item, index) in list"
+          v-for="(item, index) in AUTHORS_LIST"
           :key="`authors-${item}-${index}`"
           class="v-authors__item"
         >
           <router-link
-            :to="{name: 'author', params: {authorId: item.authorId}}"
+            :to="{name: 'author', params: {authorId: item.id}}"
             class="v-authors__link">
             {{item.name}}
           </router-link>
@@ -22,18 +22,30 @@
 </template>
 
 <script>
-import authorsPage from '../data/authorsPage.json';
-import authors from '../data/authors.json';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'VAuthors',
 
-  data() {
-    return {
-      title: authorsPage.title,
-      desc: authorsPage.desc,
-      list: authors,
-    };
+  methods: {
+    ...mapActions([
+      'getAuthorsPage',
+      'getAuthorsList',
+    ]),
+  },
+
+  computed: {
+    ...mapGetters([
+      'AUTHORS_PAGE',
+      'AUTHORS_LIST',
+    ]),
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.getAuthorsPage();
+      vm.getAuthorsList();
+    });
   },
 };
 </script>

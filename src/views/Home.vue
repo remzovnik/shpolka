@@ -1,17 +1,16 @@
 <template>
   <div class="v-home">
     <div class="container">
-      <h1 class="v-home__title page-title">{{title}}</h1>
-
-      <div class="v-home__desc" v-html="desc"></div>
+      <h1 class="v-home__title page-title">{{HOME_PAGE.title}}</h1>
+      <div class="v-home__desc" v-html="HOME_PAGE.desc"></div>
 
       <blockquote
         class="v-home__blockquote"
-        :style="`background-image: url('${quoteBackgroundImage}')`"
+        :style="`background-image: url('${HOME_PAGE.quoteBackgroundImage}')`"
       >
         <span class="v-home__blockquote-text">
-          {{quote}}
-          <cite class="v-home__blockquote-author">{{quoteAuthor}}</cite>
+          {{HOME_PAGE.quote}}
+          <cite class="v-home__blockquote-author">{{HOME_PAGE.quoteAuthor}}</cite>
         </span>
       </blockquote>
     </div>
@@ -19,19 +18,25 @@
 </template>
 
 <script>
-import home from '../data/home.json';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'VHome',
 
-  data() {
-    return {
-      title: home.title,
-      desc: home.desc,
-      quoteBackgroundImage: home.quoteBackgroundImage,
-      quote: home.quote,
-      quoteAuthor: home.quoteAuthor,
-    };
+  computed: {
+    ...mapGetters([
+      'HOME_PAGE',
+    ]),
+  },
+
+  methods: {
+    ...mapActions([
+      'getHomePage',
+    ]),
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => vm.getHomePage());
   },
 };
 </script>

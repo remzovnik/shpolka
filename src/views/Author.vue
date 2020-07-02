@@ -1,12 +1,12 @@
 <template>
   <main class="v-author">
     <div class="container">
-      <h1 class="page-title">{{title}}</h1>
-      <div class="v-author__text" v-html="text">
+      <h1 class="page-title" v-if="AUTHOR.name">{{AUTHOR.name}}</h1>
+      <div class="v-author__text" v-if="AUTHOR.desc" v-html="AUTHOR.desc">
       </div>
       <ul class="v-author__list">
         <li
-          v-for="(item, index) in list"
+          v-for="(item, index) in AUTHOR.books"
           :key="`books-${item}-${index}`"
         >
           <c-book-card
@@ -19,38 +19,32 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import CBookCard from '@/components/BookCard.vue';
-
-import authors from '../data/authors.json';
-import books from '../data/books.json';
 
 export default {
   name: 'VAuthor',
 
-  mounted() {
-    this.getAuthorData();
+  computed: {
+    ...mapGetters([
+      'AUTHOR',
+    ]),
   },
 
   methods: {
-    getAuthorData() {
-      const authorData = authors.find((author) => ((author.authorId === this.$route.params.authorId) ? author : false));
+    ...mapActions([
+      'getAuthor',
+    ]),
+  },
 
-      this.title = authorData.name;
-      this.text = authorData.text;
-      this.list = books.filter((book) => book.authorId === this.$route.params.authorId);
-    },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.getAuthor(vm.$route.params.authorId);
+    });
   },
 
   components: {
     CBookCard,
-  },
-
-  data() {
-    return {
-      title: null,
-      text: null,
-      list: null,
-    };
   },
 };
 </script>

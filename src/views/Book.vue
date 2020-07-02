@@ -3,14 +3,18 @@
     <article class="v-book">
       <div class="container">
         <div class="v-book__wrapper">
-          <h1 class="page-title">{{title}}</h1>
+          <h1 class="page-title" v-if="BOOK.title">{{BOOK.title}}</h1>
           <router-link
+            v-if="BOOK.author"
             class="v-book__author"
-            :to="{name: 'author', params: {authorId: authorId}}"
+            :to="{name: 'author', params: {authorId: BOOK.author.id}}"
           >
-            {{authorName}}
+            {{BOOK.author.name}}
           </router-link>
-          <div class="v-book__text" v-html="text"></div>
+          <div class="v-book__text"
+            v-if="BOOK.text"
+            v-html="BOOK.text">
+          </div>
         </div>
       </div>
     </article>
@@ -18,28 +22,27 @@
 </template>
 
 <script>
-import books from '../data/books.json';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'VBook',
 
-  mounted() {
-    const bookData = books.find((book) => ((book.bookId === this.$route.params.bookId) ? book : false));
-
-    this.title = bookData.title;
-    this.authorId = bookData.authorId;
-    this.authorName = bookData.authorName;
-    this.text = bookData.text;
+  computed: {
+    ...mapGetters([
+      'BOOK',
+    ]),
   },
 
-  data() {
-    return {
-      books,
-      title: null,
-      text: null,
-      authorId: null,
-      authorName: null,
-    };
+  methods: {
+    ...mapActions([
+      'getBook',
+    ]),
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.getBook(vm.$route.params.bookId);
+    });
   },
 };
 </script>

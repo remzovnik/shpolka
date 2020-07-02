@@ -1,8 +1,8 @@
 <template>
   <main class="v-books">
     <div class="container">
-      <h1 class="page-title">{{title}}</h1>
-      <div class="v-books__desc">{{desc}}</div>
+      <h1 class="page-title">{{BOOKS_PAGE.title}}</h1>
+      <div class="v-books__desc">{{BOOKS_PAGE.desc}}</div>
 
       <div class="v-books__sort">
         <button
@@ -71,11 +71,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import CBookCard from '@/components/BookCard.vue';
 import SvgIcon from '../components/SvgIcon.vue';
-
-import booksPage from '../data/booksPage.json';
-import books from '../data/books.json';
 
 export default {
   name: 'VBooks',
@@ -141,20 +139,39 @@ export default {
 
     sortList(property) {
       if (this.sortTypeState[this.sortTypeActive] === 'asc') {
-        this.list = this.list.sort((a, b) => ((a[property] > b[property]) ? 0 : -1));
+        this.list = this.BOOKS_LIST.sort((a, b) => ((a[property] > b[property]) ? 0 : -1));
       }
 
       if (this.sortTypeState[this.sortTypeActive] === 'desc') {
-        this.list = this.list.sort((a, b) => ((a[property] > b[property]) ? -1 : 0));
+        this.list = this.BOOKS_LIST.sort((a, b) => ((a[property] > b[property]) ? -1 : 0));
       }
     },
+
+    ...mapActions([
+      'getBooksPage',
+      'getBooksList',
+    ]),
+  },
+
+  computed: {
+    list: {
+      get() {
+        return this.BOOKS_LIST;
+      },
+
+      set(value) {
+        return value;
+      },
+    },
+
+    ...mapGetters([
+      'BOOKS_PAGE',
+      'BOOKS_LIST',
+    ]),
   },
 
   data() {
     return {
-      title: booksPage.title,
-      desc: booksPage.desc,
-      list: books,
       isSortActive: false,
       sortTypeActive: null,
       sortTypeState: {
@@ -163,6 +180,13 @@ export default {
         byAuthor: 'default',
       },
     };
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.getBooksPage();
+      vm.getBooksList();
+    });
   },
 };
 </script>

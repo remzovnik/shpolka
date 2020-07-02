@@ -4,7 +4,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import '@/svg';
-
 import '@/styles/index.scss';
 
 Vue.component('SvgIcon', SvgIcon);
