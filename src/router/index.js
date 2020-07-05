@@ -29,6 +29,11 @@ const routes = [
     name: 'book',
     component: () => import(/* webpackChunkName: "book" */ '../views/Book.vue'),
   },
+  {
+    path: '*',
+    name: 'error',
+    component: () => import(/* webpackChunkName: "404" */ '../views/Error.vue'),
+  },
 ];
 
 const router = new VueRouter({
