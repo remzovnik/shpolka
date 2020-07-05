@@ -1,12 +1,12 @@
 <template>
   <main class="v-authors">
     <div class="container">
-      <h1 class="page-title" v-if="AUTHORS_PAGE.title">{{AUTHORS_PAGE.title}}</h1>
-      <div class="v-authors__desc" v-if="AUTHORS_PAGE.desc">{{AUTHORS_PAGE.desc}}</div>
+      <h1 class="page-title" v-if="authorsPage.title">{{authorsPage.title}}</h1>
+      <div class="v-authors__desc" v-if="authorsPage.desc">{{authorsPage.desc}}</div>
 
       <ul class="v-books__list">
         <li
-          v-for="(item, index) in AUTHORS_LIST"
+          v-for="(item, index) in authorsList"
           :key="`authors-${item}-${index}`"
           class="v-authors__item"
         >
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'VAuthors',
@@ -35,9 +35,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'AUTHORS_PAGE',
-      'AUTHORS_LIST',
+    ...mapState([
+      'authorsPage',
+      'authorsList',
     ]),
   },
 

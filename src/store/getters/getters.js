@@ -1,9 +1,17 @@
+const getField = (obj, path) => {
+  const parts = path.split('.');
+  if (parts.length === 1) {
+    return obj[parts[0]];
+  }
+  return getField(obj[parts[0]], parts.slice(1).join('.'));
+};
+const sortAsc = (a, b) => (a > b ? 0 : -1);
+const sortDesc = (a, b) => (a > b ? -1 : 0);
+
 export default {
-  HOME_PAGE: (state) => state.homePage,
-  BOOKS_PAGE: (state) => state.booksPage,
-  BOOKS_LIST: (state) => state.booksList,
-  BOOK: (state) => state.book,
-  AUTHORS_PAGE: (state) => state.authorsPage,
-  AUTHORS_LIST: (state) => state.authorsList,
-  AUTHOR: (state) => state.author,
+  sortedBookList: (state) => (type, direction) => {
+    if (!type) return state.booksList;
+    const sortFunction = direction === 'asc' ? sortAsc : sortDesc;
+    return state.booksList.sort((a, b) => sortFunction(getField(a, type), getField(b, type)));
+  },
 };

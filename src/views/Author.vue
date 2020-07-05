@@ -1,12 +1,12 @@
 <template>
   <main class="v-author">
     <div class="container">
-      <h1 class="page-title" v-if="AUTHOR.name">{{AUTHOR.name}}</h1>
-      <div class="v-author__text" v-if="AUTHOR.desc" v-html="AUTHOR.desc">
+      <h1 class="page-title" v-if="author.name">{{author.name}}</h1>
+      <div class="v-author__text" v-if="author.desc" v-html="author.desc">
       </div>
       <ul class="v-author__list">
         <li
-          v-for="(item, index) in AUTHOR.books"
+          v-for="(item, index) in author.books"
           :key="`books-${item}-${index}`"
         >
           <c-book-card
@@ -19,15 +19,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import CBookCard from '@/components/BookCard.vue';
 
 export default {
   name: 'VAuthor',
 
   computed: {
-    ...mapGetters([
-      'AUTHOR',
+    ...mapState([
+      'author',
     ]),
   },
 

@@ -3,17 +3,17 @@
     <article class="v-book">
       <div class="container">
         <div class="v-book__wrapper">
-          <h1 class="page-title" v-if="BOOK.title">{{BOOK.title}}</h1>
+          <h1 class="page-title" v-if="book.title">{{book.title}}</h1>
           <router-link
-            v-if="BOOK.author"
+            v-if="book.author"
             class="v-book__author"
-            :to="{name: 'author', params: {authorId: BOOK.author.id}}"
+            :to="{name: 'author', params: {authorId: book.author.id}}"
           >
-            {{BOOK.author.name}}
+            {{book.author.name}}
           </router-link>
           <div class="v-book__text"
-            v-if="BOOK.text"
-            v-html="BOOK.text">
+            v-if="book.text"
+            v-html="book.text">
           </div>
         </div>
       </div>
@@ -22,14 +22,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'VBook',
 
   computed: {
-    ...mapGetters([
-      'BOOK',
+    ...mapState([
+      'book',
     ]),
   },
 

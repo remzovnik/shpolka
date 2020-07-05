@@ -1,8 +1,8 @@
 <template>
   <main class="v-books">
     <div class="container">
-      <h1 class="page-title">{{BOOKS_PAGE.title}}</h1>
-      <div class="v-books__desc">{{BOOKS_PAGE.desc}}</div>
+      <h1 class="page-title">{{booksPage.title}}</h1>
+      <div class="v-books__desc">{{booksPage.desc}}</div>
 
       <div class="v-books__sort">
         <button
@@ -14,12 +14,13 @@
           Сортировать
           <SvgIcon class="v-books__sort-toggler-icon" name="dropdown"/>
         </button>
+
         <div class="v-books__panel" v-show="isSortActive">
           <button
             class="v-books__sort-btn"
             :class="{
-              'v-books__sort-btn_state_asc': sortTypeState.byTitle === 'asc',
-              'v-books__sort-btn_state_desc': sortTypeState.byTitle === 'desc'
+              'v-books__sort-btn_state_asc': (sortType === 'title') && (sortDirection === 'asc'),
+              'v-books__sort-btn_state_desc': (sortType === 'title') && (sortDirection === 'desc')
             }"
             type="button"
             @click="sortBy('title')"
@@ -31,11 +32,13 @@
           <button
             class="v-books__sort-btn"
             :class="{
-              'v-books__sort-btn_state_asc': sortTypeState.byAuthor === 'asc',
-              'v-books__sort-btn_state_desc': sortTypeState.byAuthor === 'desc'
+              'v-books__sort-btn_state_asc': (sortType === 'author.name')
+                && (sortDirection === 'asc'),
+              'v-books__sort-btn_state_desc': (sortType === 'author.name')
+                && (sortDirection === 'desc')
             }"
             type="button"
-            @click="sortBy('authorName')"
+            @click="sortBy('author.name')"
           >
             По автору
             <SvgIcon class="v-books__sort-btn-icon" name="sort"/>
@@ -44,8 +47,8 @@
           <button
             class="v-books__sort-btn"
             :class="{
-              'v-books__sort-btn_state_asc': sortTypeState.byYear === 'asc',
-              'v-books__sort-btn_state_desc': sortTypeState.byYear === 'desc'
+              'v-books__sort-btn_state_asc': (sortType === 'year') && (sortDirection === 'asc'),
+              'v-books__sort-btn_state_desc': (sortType === 'year') && (sortDirection === 'desc')
             }"
             type="button"
             @click="sortBy('year')"
@@ -58,7 +61,7 @@
 
       <div class="v-books__grid">
         <div
-          v-for="(item, index) in list"
+          v-for="(item, index) in sortedBookList()"
           :key="`books-${item}-${index}`"
         >
           <c-book-card
@@ -71,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import CBookCard from '@/components/BookCard.vue';
 import SvgIcon from '../components/SvgIcon.vue';
 
@@ -83,80 +86,18 @@ export default {
     SvgIcon,
   },
 
-  methods: {
-    toggleSort() {
-      this.isSortActive = !this.isSortActive;
-    },
-
-    sortBy(type) {
-      switch (type) {
-        case 'title': {
-          this.switchSortType('byTitle');
-          break;
-        }
-
-        case 'authorName': {
-          this.switchSortType('byAuthor');
-          break;
-        }
-
-        case 'year': {
-          this.switchSortType('byYear');
-          break;
-        }
-
-        default: break;
-      }
-
-      this.sortList(type);
-    },
-
-    switchSortType(type) {
-      if (type !== this.sortTypeActive) {
-        this.sortTypeState[this.sortTypeActive] = 'default';
-        this.sortTypeActive = type;
-      }
-
-      switch (this.sortTypeState[type]) {
-        case 'default': {
-          this.sortTypeState[type] = 'asc';
-          break;
-        }
-
-        case 'asc': {
-          this.sortTypeState[type] = 'desc';
-          break;
-        }
-
-        case 'desc': {
-          this.sortTypeState[type] = 'asc';
-          break;
-        }
-
-        default: break;
-      }
-    },
-
-    sortList(property) {
-      if (this.sortTypeState[this.sortTypeActive] === 'asc') {
-        this.list = this.BOOKS_LIST.sort((a, b) => ((a[property] > b[property]) ? 0 : -1));
-      }
-
-      if (this.sortTypeState[this.sortTypeActive] === 'desc') {
-        this.list = this.BOOKS_LIST.sort((a, b) => ((a[property] > b[property]) ? -1 : 0));
-      }
-    },
-
-    ...mapActions([
-      'getBooksPage',
-      'getBooksList',
-    ]),
+  data() {
+    return {
+      isSortActive: false,
+      sortType: null,
+      sortDirection: null,
+    };
   },
 
   computed: {
     list: {
       get() {
-        return this.BOOKS_LIST;
+        return this.books_list;
       },
 
       set(value) {
@@ -164,22 +105,64 @@ export default {
       },
     },
 
+    ...mapState([
+      'booksPage',
+      'booksList',
+    ]),
+
     ...mapGetters([
-      'BOOKS_PAGE',
-      'BOOKS_LIST',
+      'sortedBookList',
     ]),
   },
 
-  data() {
-    return {
-      isSortActive: false,
-      sortTypeActive: null,
-      sortTypeState: {
-        byTitle: 'default',
-        byYear: 'default',
-        byAuthor: 'default',
-      },
-    };
+  methods: {
+    toggleSort() {
+      this.isSortActive = !this.isSortActive;
+    },
+
+    sortBy(type) {
+      if (this.sortType === type) {
+        switch (this.sortDirection) {
+          case null: {
+            this.sortDirection = 'asc';
+            break;
+          }
+
+          case 'asc': {
+            this.sortDirection = 'desc';
+            break;
+          }
+
+          case 'desc': {
+            this.sortDirection = 'asc';
+            break;
+          }
+
+          default: break;
+        }
+      } else {
+        this.sortType = type;
+        this.sortDirection = 'asc';
+      }
+
+      this.sortedBookList(this.sortType, this.sortDirection);
+    },
+
+    switchSortType() {
+      // sortList(property) {
+      //   if (this.sortTypeState[this.sortTypeActive] === 'asc') {
+      //     this.list = this.books_list.sort((a, b) => ((a[property] > b[property]) ? 0 : -1));
+      //   }
+
+      //   if (this.sortTypeState[this.sortTypeActive] === 'desc') {
+      //     this.list = this.books_list.sort((a, b) => ((a[property] > b[property]) ? -1 : 0));
+      //   }
+    },
+
+    ...mapActions([
+      'getBooksPage',
+      'getBooksList',
+    ]),
   },
 
   beforeRouteEnter(to, from, next) {
