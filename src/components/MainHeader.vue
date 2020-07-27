@@ -4,21 +4,23 @@
       <div class="c-main-header__wrapper">
         <router-link to="/" class="c-main-header__title-link">Шполка</router-link>
 
-        <ul class="c-main-header__list" v-show="isMenuActive">
-          <li
-            v-for="(item, index) in list"
-            :key="`menu-${item}-${index}`"
-            class="c-main-header__item"
-          >
-            <router-link
-              :to="item.to"
-              class="c-main-header__link"
-              @click.native="closeMenu"
+        <transition name="showing">
+          <ul class="c-main-header__list" v-show="isMenuActive">
+            <li
+              v-for="(item, index) in list"
+              :key="`menu-${item}-${index}`"
+              class="c-main-header__item"
             >
-              {{item.text}}
-            </router-link>
-          </li>
-        </ul>
+              <router-link
+                :to="item.to"
+                class="c-main-header__link"
+                @click.native="closeMenu"
+              >
+                {{item.text}}
+              </router-link>
+            </li>
+          </ul>
+        </transition>
 
         <button class="c-main-header__toggler" type="button" @click="toggleMenu">
           <SvgIcon class="c-main-header__menu-icon" name="menu"/>
@@ -35,10 +37,6 @@ import SvgIcon from './SvgIcon.vue';
 
 export default {
   name: 'MainHeader',
-
-  props: {
-    msg: String,
-  },
 
   methods: {
     closeMenu() {
@@ -161,5 +159,25 @@ export default {
     height: 30px;
     fill: $color-primary;
   }
+}
+
+.showing-enter-active {
+  transition: transform ease-out 0.3s;
+}
+
+.showing-leave-active {
+  transition: transform ease-in 0.2s
+}
+
+.showing-enter {
+  transform: translateY(-100%);
+}
+
+.showing-enter-to {
+  transform: translateY(0);
+}
+
+.showing-leave-to {
+  transform: translateY(-100%);
 }
 </style>
