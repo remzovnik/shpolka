@@ -29,7 +29,6 @@ export default {
 };
 </script>
 
-
 <style>
   .fade-enter-active {
     transition: opacity ease-out 0.6s, transform ease-out .3s;
