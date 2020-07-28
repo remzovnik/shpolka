@@ -1,4 +1,4 @@
-const DATA_BASE = 'http://localhost:8080/data';
+const DATA_BASE = '/data';
 const DATA_MENU = 'menu.json';
 const DATA_HOME_PAGE = 'homePage.json';
 const DATA_BOOKS = 'books.json';
