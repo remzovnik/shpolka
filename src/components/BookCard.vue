@@ -3,7 +3,7 @@
     <div class="c-book-card__img-container">
       <img
         class="c-book-card__img"
-        :src="`http://localhost:1337${image.url}`"
+        :src="image.url"
         :alt="imageAlt || ' '"
       >
     </div>
