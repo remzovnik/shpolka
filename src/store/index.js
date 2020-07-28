@@ -9,12 +9,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    menu: [],
     homePage: {},
     booksPage: {},
-    booksList: [],
+    books: [],
     book: {},
     authorsPage: {},
-    authorsList: [],
+    authors: [],
     author: {},
   },
   actions,

@@ -1,4 +1,8 @@
 export default {
+  setMenu(state, payload) {
+    state.menu = payload;
+  },
+
   setHomePage(state, payload) {
     state.homePage = payload;
   },
@@ -7,8 +11,8 @@ export default {
     state.booksPage = payload;
   },
 
-  setBooksList(state, payload) {
-    state.booksList = payload;
+  setBooks(state, payload) {
+    state.books = payload;
   },
 
   setBook(state, payload) {
@@ -19,8 +23,8 @@ export default {
     state.authorsPage = payload;
   },
 
-  setAuthorsList(state, payload) {
-    state.authorsList = payload;
+  setAuthors(state, payload) {
+    state.authors = payload;
   },
 
   setAuthor(state, payload) {

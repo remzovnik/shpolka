@@ -6,7 +6,7 @@
 
       <ul class="v-books__list">
         <li
-          v-for="(item, index) in authorsList"
+          v-for="(item, index) in authors"
           :key="`authors-${item}-${index}`"
           class="v-authors__item"
         >
@@ -30,21 +30,21 @@ export default {
   methods: {
     ...mapActions([
       'getAuthorsPage',
-      'getAuthorsList',
+      'getAuthors',
     ]),
   },
 
   computed: {
     ...mapState([
       'authorsPage',
-      'authorsList',
+      'authors',
     ]),
   },
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.getAuthorsPage();
-      vm.getAuthorsList();
+      vm.getAuthors();
     });
   },
 };

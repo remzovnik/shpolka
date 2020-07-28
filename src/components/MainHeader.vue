@@ -7,7 +7,7 @@
         <transition name="showing">
           <ul class="c-main-header__list" v-show="isMenuActive">
             <li
-              v-for="(item, index) in list"
+              v-for="(item, index) in menu"
               :key="`menu-${item}-${index}`"
               class="c-main-header__item"
             >
@@ -32,13 +32,17 @@
 </template>
 
 <script>
-import menu from '../data/menu.json';
+import { mapActions, mapState } from 'vuex';
 import SvgIcon from './SvgIcon.vue';
 
 export default {
   name: 'MainHeader',
 
   methods: {
+    ...mapActions([
+      'getMenu',
+    ]),
+
     closeMenu() {
       this.isMenuActive = false;
     },
@@ -48,6 +52,16 @@ export default {
     },
   },
 
+  mounted() {
+    this.getMenu();
+  },
+
+  computed: {
+    ...mapState([
+      'menu',
+    ]),
+  },
+
   components: {
     SvgIcon,
   },
@@ -55,7 +69,6 @@ export default {
   data() {
     return {
       isMenuActive: false,
-      list: menu.list,
     };
   },
 };

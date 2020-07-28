@@ -1,11 +1,25 @@
-const DATA_BASE = 'http://localhost:1337';
-const DATA_HOME_PAGE = 'home-page';
-const DATA_BOOKS_PAGE = 'book-page';
+const DATA_BASE = 'http://localhost:8080/data';
+const DATA_MENU = 'menu.json';
+const DATA_HOME_PAGE = 'homePage.json';
+const DATA_BOOKS = 'books.json';
 const DATA_BOOKS_LIST = 'books';
-const DATA_AUTHORS_PAGE = 'authors-page';
+const DATA_BOOKS_PAGE = 'booksPage.json';
+const DATA_AUTHORS_PAGE = 'authorsPage.json';
+const DATA_AUTHORS = 'authors.json';
 const DATA_AUTHORS_LIST = 'authors';
 
 export default {
+  getMenu(context) {
+    return fetch(`${DATA_BASE}/${DATA_MENU}`)
+      .then((response) => response.json())
+      .then((response) => {
+        context.commit('setMenu', response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
   getHomePage(context) {
     return fetch(`${DATA_BASE}/${DATA_HOME_PAGE}`)
       .then((response) => response.json())
@@ -28,11 +42,11 @@ export default {
       });
   },
 
-  getBooksList(context) {
-    return fetch(`${DATA_BASE}/${DATA_BOOKS_LIST}`)
+  getBooks(context) {
+    return fetch(`${DATA_BASE}/${DATA_BOOKS}`)
       .then((response) => response.json())
       .then((response) => {
-        context.commit('setBooksList', response);
+        context.commit('setBooks', response);
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +54,7 @@ export default {
   },
 
   getBook(context, payload) {
-    return fetch(`${DATA_BASE}/${DATA_BOOKS_LIST}/${payload}`)
+    return fetch(`${DATA_BASE}/${DATA_BOOKS_LIST}/${payload}.json`)
       .then((response) => response.json())
       .then((response) => {
         context.commit('setBook', response);
@@ -61,11 +75,11 @@ export default {
       });
   },
 
-  getAuthorsList(context) {
-    return fetch(`${DATA_BASE}/${DATA_AUTHORS_LIST}`)
+  getAuthors(context) {
+    return fetch(`${DATA_BASE}/${DATA_AUTHORS}`)
       .then((response) => response.json())
       .then((response) => {
-        context.commit('setAuthorsList', response);
+        context.commit('setAuthors', response);
       })
       .catch((error) => {
         console.log(error);
@@ -73,7 +87,7 @@ export default {
   },
 
   getAuthor(context, payload) {
-    return fetch(`${DATA_BASE}/${DATA_AUTHORS_LIST}/${payload}`)
+    return fetch(`${DATA_BASE}/${DATA_AUTHORS_LIST}/${payload}.json`)
       .then((response) => response.json())
       .then((response) => {
         context.commit('setAuthor', response);

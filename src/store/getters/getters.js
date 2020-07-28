@@ -9,9 +9,9 @@ const sortAsc = (a, b) => (a > b ? 0 : -1);
 const sortDesc = (a, b) => (a > b ? -1 : 0);
 
 export default {
-  sortedBookList: (state) => (type, direction) => {
-    if (!type) return state.booksList;
+  sortedBooks: (state) => (type, direction) => {
+    if (!type) return state.books;
     const sortFunction = direction === 'asc' ? sortAsc : sortDesc;
-    return state.booksList.sort((a, b) => sortFunction(getField(a, type), getField(b, type)));
+    return state.books.sort((a, b) => sortFunction(getField(a, type), getField(b, type)));
   },
 };

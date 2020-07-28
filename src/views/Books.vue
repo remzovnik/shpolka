@@ -61,7 +61,7 @@
 
       <div class="v-books__grid">
         <div
-          v-for="(item, index) in sortedBookList()"
+          v-for="(item, index) in sortedBooks()"
           :key="`books-${item}-${index}`"
         >
           <c-book-card
@@ -95,23 +95,13 @@ export default {
   },
 
   computed: {
-    list: {
-      get() {
-        return this.books_list;
-      },
-
-      set(value) {
-        return value;
-      },
-    },
-
     ...mapState([
       'booksPage',
-      'booksList',
+      'books',
     ]),
 
     ...mapGetters([
-      'sortedBookList',
+      'sortedBooks',
     ]),
   },
 
@@ -145,30 +135,19 @@ export default {
         this.sortDirection = 'asc';
       }
 
-      this.sortedBookList(this.sortType, this.sortDirection);
-    },
-
-    switchSortType() {
-      // sortList(property) {
-      //   if (this.sortTypeState[this.sortTypeActive] === 'asc') {
-      //     this.list = this.books_list.sort((a, b) => ((a[property] > b[property]) ? 0 : -1));
-      //   }
-
-      //   if (this.sortTypeState[this.sortTypeActive] === 'desc') {
-      //     this.list = this.books_list.sort((a, b) => ((a[property] > b[property]) ? -1 : 0));
-      //   }
+      this.sortedBooks(this.sortType, this.sortDirection);
     },
 
     ...mapActions([
       'getBooksPage',
-      'getBooksList',
+      'getBooks',
     ]),
   },
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.getBooksPage();
-      vm.getBooksList();
+      vm.getBooks();
     });
   },
 };
