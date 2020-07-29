@@ -5,6 +5,7 @@ import router from './router';
 import store from './store';
 import '@/svg';
 import '@/styles/index.scss';
+import directives from './directives';
 
 Vue.component('SvgIcon', SvgIcon);
 
@@ -15,3 +16,7 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount('#app');
+
+Object.values(directives).forEach(({ name, directive }) => {
+  Vue.directive(name, directive);
+});

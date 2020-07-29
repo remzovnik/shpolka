@@ -1,6 +1,6 @@
 <template>
   <main>
-    <article class="v-book">
+    <article class="v-book" v-progress-bar>
       <div class="container">
         <div class="v-book__wrapper">
           <h1 class="page-title" v-if="book.title">{{book.title}}</h1>
@@ -17,6 +17,7 @@
           </div>
         </div>
       </div>
+      <div class="v-book__progress" data-progress-bar aria-hidden></div>
     </article>
   </main>
 </template>
@@ -49,6 +50,7 @@ export default {
 
 <style lang="scss">
 .v-book {
+  position: relative;
   padding: 80px 0;
 
   &__wrapper {
@@ -67,6 +69,17 @@ export default {
     align-self: start;
     font-size: 16px;
     line-height: 1.6;
+  }
+
+  &__progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: $color-decor;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
   }
 }
 </style>
