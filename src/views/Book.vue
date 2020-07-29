@@ -28,7 +28,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import router from '../router';
 import SvgIcon from '../components/SvgIcon.vue';
 
 export default {
@@ -46,7 +45,7 @@ export default {
     ]),
 
     routeBack() {
-      router.back();
+      this.$router.back();
     },
   },
 
