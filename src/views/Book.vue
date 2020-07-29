@@ -16,6 +16,10 @@
             v-html="book.text">
           </div>
         </div>
+        <a class="v-book__back" href="#" @click.prevent="routeBack">
+          <SvgIcon class="v-book__back-icon" name="arrow-left"/>
+          Назад
+        </a>
       </div>
       <div class="v-book__progress" data-progress-bar aria-hidden></div>
     </article>
@@ -24,6 +28,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import router from '../router';
+import SvgIcon from '../components/SvgIcon.vue';
 
 export default {
   name: 'VBook',
@@ -38,12 +44,20 @@ export default {
     ...mapActions([
       'getBook',
     ]),
+
+    routeBack() {
+      router.back();
+    },
   },
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.getBook(vm.$route.params.bookId);
     });
+  },
+
+  components: {
+    SvgIcon,
   },
 };
 </script>
@@ -69,6 +83,30 @@ export default {
     align-self: start;
     font-size: 16px;
     line-height: 1.6;
+  }
+
+  &__back {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 24px;
+    line-height: 36px;
+    color: $color-decor;
+
+    &:hover {
+      .v-book__back-icon {
+        transform: translateX(-8px);
+        transition: transform 0.3s ease-out;
+      }
+    }
+  }
+
+  &__back-icon {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    fill: $color-decor;
+    transition: transform 0.15s ease-out;
   }
 
   &__progress {
